@@ -19,7 +19,7 @@ jobs:
       with:
         java-version: 14-ea
     - name: install X11
-      run:  sudo apt-get install libx11-dev libxext-dev libxrender-dev libxrandr-dev libxtst-dev libxt-dev
+      run:  sudo apt-get install libx11-dev libxext-dev libxrender-dev libxrandr-dev libxtst-dev libxt-dev libcups2-dev
     - name: Build JDK
       run: |
         cd src
