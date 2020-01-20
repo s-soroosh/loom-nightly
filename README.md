@@ -7,6 +7,6 @@ For the time being it just releases binary for Linux X64, Mac OS release binary 
 Stay tuned...
 
 To download the binary directly you can:
-- Download from [here](https://github.com/psycho-ir/loom-nighly/releases/tag/nightly)
+- Download from [here](https://github.com/psycho-ir/loom-nightly/releases/tag/nightly)
 - Download via wget `wget  https://github.com/psycho-ir/loom-nighly/releases/download/nightly/jdk-loom-linux-nightly.zip`
 
