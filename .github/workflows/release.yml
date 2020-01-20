@@ -1,9 +1,13 @@
 name: Release Loom Project
 
 on:
-  schedule:
-    # * is a special character in YAML so you have to quote this string
-    - cron:  '0 0 * * *'
+  push:
+    branches: 
+      - master
+# on:
+#   schedule:
+#     # * is a special character in YAML so you have to quote this string
+#     - cron:  '0 0 * * *'
 
 jobs:
   build:
@@ -71,5 +75,8 @@ jobs:
         asset_path: ./src/jdk-loom-linux-nightly.zip
         asset_name: jdk-loom-linux-nightly.zip
         asset_content_type: application/zip
+    - name: Finish
+      run: |
+       echo 'Build finished successfully'
         
         
