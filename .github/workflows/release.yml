@@ -1,12 +1,9 @@
-name: Java CI
+name: Release Loom Project
+
 on:
-  push:
-    branches: 
-      - master
-# on:
-#   schedule:
-#     # * is a special character in YAML so you have to quote this string
-#     - cron:  '0 0 * * *'
+  schedule:
+    # * is a special character in YAML so you have to quote this string
+    - cron:  '0 0 * * *'
 
 jobs:
   build:
@@ -14,7 +11,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-    - name: Checkout tools repo
+    - name: Checkout loom repository
       uses: actions/checkout@v2
       with:
        repository: openjdk/loom
