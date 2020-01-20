@@ -23,21 +23,35 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 14-ea
+    - name: Check new commits
+      run: |
+         latest_release_tag=$(curl https://api.github.com/repos/psycho-ir/loom-nighly/releases/latest | jq -r '.tag_name')
+         version=$(git rev-parse --short HEAD)
+         if [ "$latest_release_tag" == "$version" ]; then
+            echo ::set-env name=CONTINUE::NO
+         else
+            echo ::set-env name=CONTINUE::YES
+         fi
+         
     - name: install prerequisites
+      if: env.CONTINUE != 'YES'
       run:  sudo apt-get install libx11-dev libxext-dev libxrender-dev libxrandr-dev libxtst-dev libxt-dev libcups2-dev  libasound2-dev
     - name: Build JDK
+      if: env.CONTINUE != 'YES'
       run: |
         cd src     
         sh configure
         make images
         zip -r jdk-loom-linux-nightly.zip build/linux-x86_64-server-release/jdk
     - name: Set version
+      if: env.CONTINUE != 'YES'
       run: |
         cd src
         VERSION=$(git rev-parse --short HEAD)
         echo ::set-env name=VERSION::$VERSION
     - name: Create Release
       id: create_release
+      if: env.CONTINUE != 'YES'
       uses: actions/create-release@v1.0.0
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -47,6 +61,7 @@ jobs:
         draft: false
         prerelease: false
     - name: Upload Release Asset
+      if: env.CONTINUE != 'YES'
       id: upload-release-asset 
       uses: actions/upload-release-asset@v1.0.1
       env:
