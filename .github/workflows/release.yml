@@ -30,7 +30,7 @@ jobs:
         cd src     
         sh configure
         make images
-        zip -r jdk-loom-linux-nightly.zip .
+        zip -r jdk-loom-linux-nightly.zip build/linux-x86_64-server-release/jdk
     - name: Set version
       run: |
         cd src
@@ -43,7 +43,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         tag_name: ${{ env.VERSION }}
-        release_name: Nightly Releease
+        release_name: Nightly Release
         draft: false
         prerelease: false
     - name: Upload Release Asset
