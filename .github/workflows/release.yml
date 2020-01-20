@@ -36,7 +36,7 @@ jobs:
       run: |
         cd src
         VERSION=$(git rev-parse --short HEAD)
-        echo ::set-env name=version::$VERSION
+        echo ::set-env name=VERSION::$VERSION
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1.0.0
