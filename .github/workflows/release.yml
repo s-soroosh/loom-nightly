@@ -23,24 +23,30 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 14-ea
-    - name: install prerequisites
-      run:  sudo apt-get install libx11-dev libxext-dev libxrender-dev libxrandr-dev libxtst-dev libxt-dev libcups2-dev  libasound2-dev
+#     - name: install prerequisites
+#       run:  sudo apt-get install libx11-dev libxext-dev libxrender-dev libxrandr-dev libxtst-dev libxt-dev libcups2-dev  libasound2-dev
     - name: Build JDK
       run: |
         cd src
-        sh configure
-        make images
-        zip -r jdk-loom-linux-nightly.zip build/linux-x86_64-server-release/jdk
+        zip -r jdk-loom-linux-nightly.zip .
+#        sh configure
+#        make images
+
+    - name: Set version
+      run: |
+        cd src
+        VERSION=$(git rev-parse --short HEAD)
+        echo ::set-env name=version::$VERSION
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1.0.0
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: nightly
+        tag_name: ${{ env.VERSION }}
         release_name: Nightly Releease
         draft: false
-        prerelease: true
+        prerelease: false
     - name: Upload Release Asset
       id: upload-release-asset 
       uses: actions/upload-release-asset@v1.0.1
