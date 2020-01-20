@@ -27,6 +27,8 @@ jobs:
       run: |
          latest_release_tag=$(curl https://api.github.com/repos/psycho-ir/loom-nighly/releases/latest | jq -r '.tag_name')
          version=$(git rev-parse --short HEAD)
+         echo $latest_release_tag
+         echo $version
          if [ "$latest_release_tag" == "$version" ]; then
             echo ::set-env name=CONTINUE::NO
          else
