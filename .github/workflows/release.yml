@@ -25,6 +25,7 @@ jobs:
         java-version: 14-ea
     - name: Check new commits
       run: |
+         cd src
          latest_release_tag=$(curl https://api.github.com/repos/psycho-ir/loom-nighly/releases/latest | jq -r '.tag_name')
          version=$(git rev-parse --short HEAD)
          echo $latest_release_tag
