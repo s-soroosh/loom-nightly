@@ -34,7 +34,9 @@ jobs:
          if [ "$latest_release_tag" == "$version" ]; then
             echo ::set-env name=CONTINUE::YES
          fi
-         
+    - name: Install prerequisites
+      run: |
+        brew install autoconf
     - name: Build JDK
       if: env.CONTINUE == 'YES'
       run: |
