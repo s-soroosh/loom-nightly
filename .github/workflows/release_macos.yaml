@@ -25,11 +25,13 @@ jobs:
       with:
         java-version: 14-ea
     - name: Check new commits
+      env:
+        TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
          set -x
          cd src
-         echo $(curl https://api.github.com/repos/psycho-ir/loom-nightly/releases/latest)
-         latest_release_tag=$(curl https://api.github.com/repos/psycho-ir/loom-nightly/releases/latest | jq -r '.tag_name')
+         echo $(curl -H "Authorization: token $TOKEN"  https://api.github.com/repos/psycho-ir/loom-nightly/releases/latest)
+         latest_release_tag=$(curl -H "Authorization: token $TOKEN"  https://api.github.com/repos/psycho-ir/loom-nightly/releases/latest | jq -r '.tag_name')
          version=$(git rev-parse --short HEAD)
          echo $latest_release_tag
          echo $version
