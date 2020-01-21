@@ -43,7 +43,7 @@ jobs:
         cd src     
         sh configure
         make images
-        zip -r jdk-loom-linux-nightly.zip build/macosx-x86_64-server-release/jdk
+        zip -r jdk-loom-macos-nightly.zip build/macosx-x86_64-server-release/jdk
     - name: Set version
       if: env.CONTINUE == 'YES'
       run: |
@@ -70,8 +70,8 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./src/jdk-loom-linux-nightly.zip
-        asset_name: jdk-loom-linux-nightly.zip
+        asset_path: ./src/jdk-loom-macos-nightly.zip
+        asset_name: jdk-loom-macos-nightly.zip
         asset_content_type: application/zip
     - name: Finish
       run: |
