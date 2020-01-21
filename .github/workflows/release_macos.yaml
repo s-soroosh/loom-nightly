@@ -33,6 +33,7 @@ jobs:
          echo $version
          if [ "$latest_release_tag" == "$version" ]; then
             echo ::set-env name=CONTINUE::YES
+         fi
          
     - name: Build JDK
       if: env.CONTINUE == 'YES'
