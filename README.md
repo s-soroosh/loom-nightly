@@ -13,3 +13,4 @@ To download the binary directly you can:
 - Download from [here](https://github.com/psycho-ir/loom-nightly/releases/tag/nightly)
 - Download via wget `wget  https://github.com/psycho-ir/loom-nighly/releases/download/nightly/jdk-loom-linux-nightly.zip`
 
+- For Mac OSX binary: 
