@@ -43,7 +43,7 @@ jobs:
         cd src     
         sh configure
         make images
-        zip -r jdk-loom-linux-nightly.zip build/linux-x86_64-server-release/jdk
+        zip -r jdk-loom-linux-nightly.zip build/macosx-x86_64-server-release/jdk
     - name: Set version
       if: env.CONTINUE == 'YES'
       run: |
