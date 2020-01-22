@@ -24,24 +24,22 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 14-ea
-    - name: Check new commits
-      run: |
-         cd src
-         latest_release_tag=$(curl https://api.github.com/repos/psycho-ir/loom-nightly/releases/latest | jq -r '.tag_name')
-         version=$(git rev-parse --short HEAD)
-         echo $latest_release_tag
-         echo $version
-         if [ "$latest_release_tag" == "$version" ]; then
-            echo ::set-env name=CONTINUE::NO
-         else
-            echo ::set-env name=CONTINUE::YES
-         fi
+#     - name: Check new commits
+#       run: |
+#          cd src
+#          latest_release_tag=$(curl https://api.github.com/repos/psycho-ir/loom-nightly/releases/latest | jq -r '.tag_name')
+#          version=$(git rev-parse --short HEAD)
+#          echo $latest_release_tag
+#          echo $version
+#          if [ "$latest_release_tag" == "$version" ]; then
+#             echo ::set-env name=CONTINUE::NO
+#          else
+#             echo ::set-env name=CONTINUE::YES
+#          fi
          
     - name: install prerequisites
-      if: env.CONTINUE == 'YES'
       run:  sudo apt-get install libx11-dev libxext-dev libxrender-dev libxrandr-dev libxtst-dev libxt-dev libcups2-dev  libasound2-dev
     - name: Build JDK
-      if: env.CONTINUE == 'YES'
       run: |
         cd src     
         sh configure
@@ -66,25 +64,25 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 14-ea
-    - name: Check new commits
-      env:
-        TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: |
-         set -x
-         cd src
-         echo $(curl -H "Authorization: token $TOKEN"  https://api.github.com/repos/psycho-ir/loom-nightly/releases/latest)
-         latest_release_tag=$(curl -H "Authorization: token $TOKEN"  https://api.github.com/repos/psycho-ir/loom-nightly/releases/latest | jq -r '.tag_name')
-         version=$(git rev-parse --short HEAD)
-         echo $latest_release_tag
-         echo $version
-         if [ "$latest_release_tag" == "$version" ]; then
-            echo ::set-env name=CONTINUE::YES
-         fi
+#     - name: Check new commits
+#       env:
+#         TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#       run: |
+#          set -x
+#          cd src
+#          echo $(curl -H "Authorization: token $TOKEN"  https://api.github.com/repos/psycho-ir/loom-nightly/releases/latest)
+#          latest_release_tag=$(curl -H "Authorization: token $TOKEN"  https://api.github.com/repos/psycho-ir/loom-nightly/releases/latest | jq -r '.tag_name')
+#          version=$(git rev-parse --short HEAD)
+#          echo $latest_release_tag
+#          echo $version
+#          if [ "$latest_release_tag" == "$version" ]; then
+#             echo ::set-env name=CONTINUE::YES
+#          fi
     - name: Install prerequisites
       run: |
         brew install autoconf
     - name: Build JDK
-      if: env.CONTINUE == 'YES'
+#       if: env.CONTINUE == 'YES'
       run: |
         cd src     
         sh configure
@@ -97,6 +95,9 @@ jobs:
         path: src/jdk-loom-macos-nightly.zip
   release:
     runs-on: ubuntu-latest
+    needs: 
+    - build-linux
+    - build-mac
     steps:
       - name: Download linux build
         uses: actions/download-artifact@v1
@@ -112,14 +113,14 @@ jobs:
          repository: openjdk/loom
          path: src
       - name: Set version
-        if: env.CONTINUE == 'YES'
+#         if: env.CONTINUE == 'YES'
         run: |
           cd src
           VERSION=$(git rev-parse --short HEAD)
           echo ::set-env name=VERSION::$VERSION
       - name: Create Release
         id: create_release
-        if: env.CONTINUE == 'YES'
+#         if: env.CONTINUE == 'YES'
         uses: actions/create-release@v1.0.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -129,7 +130,7 @@ jobs:
           draft: false
           prerelease: false
       - name: Upload Linux Release Asset
-        if: env.CONTINUE == 'YES'
+#         if: env.CONTINUE == 'YES'
         id: upload-linux-release-asset 
         uses: actions/upload-release-asset@v1.0.1
         env:
@@ -140,7 +141,7 @@ jobs:
           asset_name: jdk-loom-linux-nightly.zip
           asset_content_type: application/zip
       - name: Upload  Macos Release Asset
-        if: env.CONTINUE == 'YES'
+#         if: env.CONTINUE == 'YES'
         id: upload-mac-asset 
         uses: actions/upload-release-asset@v1.0.1
         env:
