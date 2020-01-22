@@ -109,20 +109,34 @@ jobs:
         uses: actions/download-artifact@v1
         with:
           name: jdk-loom-macos-nightly.zip
+      - name: Check new commits
+        run: |
+         cd src
+         latest_release_tag=$(curl https://api.github.com/repos/psycho-ir/loom-nightly/releases/latest | jq -r '.tag_name')
+         version=$(git rev-parse --short HEAD)
+         echo $latest_release_tag
+         echo $version
+         if [ "$latest_release_tag" == "$version" ]; then
+            echo ::set-env name=CONTINUE::NO
+         else
+            echo ::set-env name=CONTINUE::YES
+         fi
       - name: Checkout loom repository
+        if: env.CONTINUE == 'YES'
         uses: actions/checkout@v2
         with:
          repository: openjdk/loom
+         ref: fibers
          path: src
       - name: Set version
-#         if: env.CONTINUE == 'YES'
+        if: env.CONTINUE == 'YES'
         run: |
           cd src
           VERSION=$(git rev-parse --short HEAD)
           echo ::set-env name=VERSION::$VERSION
       - name: Create Release
         id: create_release
-#         if: env.CONTINUE == 'YES'
+        if: env.CONTINUE == 'YES'
         uses: actions/create-release@v1.0.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -132,7 +146,7 @@ jobs:
           draft: false
           prerelease: false
       - name: Upload Linux Release Asset
-#         if: env.CONTINUE == 'YES'
+        if: env.CONTINUE == 'YES'
         id: upload-linux-release-asset 
         uses: actions/upload-release-asset@v1.0.1
         env:
@@ -143,7 +157,7 @@ jobs:
           asset_name: jdk-loom-linux-nightly.zip
           asset_content_type: application/zip
       - name: Upload  Macos Release Asset
-#         if: env.CONTINUE == 'YES'
+        if: env.CONTINUE == 'YES'
         id: upload-mac-asset 
         uses: actions/upload-release-asset@v1.0.1
         env:
