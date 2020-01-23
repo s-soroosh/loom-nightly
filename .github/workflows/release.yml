@@ -45,14 +45,15 @@ jobs:
         with:
           name: y.zip
       - run: |
-          cat y.zip
+          ls y.zip/*
+          cat y.zip/*
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1.0.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: test-tag2
+          tag_name: test-tag3
           release_name: Nightly Release
           draft: false
           prerelease: false
