@@ -37,23 +37,24 @@ jobs:
       - name: Upload file
         uses: actions/upload-artifact@v1
         with:
-          name: y.zip
+          name: y
           path: x.zip
 
       - name: Download file
         uses: actions/download-artifact@v1
         with:
-          name: y.zip
+          name: y
       - run: |
-          ls y.zip/*
-          cat y.zip/*
+          ls y
+          ls y/*
+          cat y/*
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1.0.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: test-tag3
+          tag_name: test-tag4
           release_name: Nightly Release
           draft: false
           prerelease: false
