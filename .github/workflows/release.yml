@@ -54,7 +54,7 @@ jobs:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ./x.zip
           asset_name: jdk-loom-macos-nightly.zip
-          asset_content_type: application/zip
+          asset_content_type: text/plain
       - name: Finish
         run: |
           echo 'Build finished successfully'
