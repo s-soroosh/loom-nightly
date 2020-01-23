@@ -89,6 +89,7 @@ jobs:
           path: src
       - name: Check new commits
         run: |
+          echo $(ls)
           cd src
           latest_release_tag=$(curl -H "Authorization: token $TOKEN"  https://api.github.com/repos/psycho-ir/loom-nightly/releases/latest | jq -r '.tag_name')
           version=$(git rev-parse --short HEAD)
@@ -131,18 +132,18 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: jdk-loom-linux-nightly.zip
+          asset_path: ./jdk-loom-linux-nightly.zip
           asset_name: jdk-loom-linux-nightly.zip
           asset_content_type: application/zip
       - name: Upload  Macos Release Asset
         if: env.CONTINUE == 'YES'
-        id: upload-mac-asset
+        id: upload-mac-release-asset
         uses: actions/upload-release-asset@v1.0.1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: jdk-loom-macos-nightly.zip
+          asset_path: ./jdk-loom-macos-nightly.zip
           asset_name: jdk-loom-macos-nightly.zip
           asset_content_type: application/zip
       - name: Finish
