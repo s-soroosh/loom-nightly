@@ -30,7 +30,6 @@ jobs:
       run: |
          set -x
          cd src
-         echo $(curl -H "Authorization: token $TOKEN"  https://api.github.com/repos/psycho-ir/loom-nightly/releases/latest)
          latest_release_tag=$(curl -H "Authorization: token $TOKEN"  https://api.github.com/repos/psycho-ir/loom-nightly/releases/latest | jq -r '.tag_name')
          version=$(git rev-parse --short HEAD)
          echo $latest_release_tag
