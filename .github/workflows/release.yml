@@ -34,14 +34,25 @@ jobs:
           else
              echo ::set-env name=CONTINUE::YES
           fi
+      - name: Upload file
+        uses: actions/upload-artifact@v1
+        with:
+          name: y.zip
+          path: x.zip
 
+      - name: Download file
+        uses: actions/download-artifact@v1
+        with:
+          name: y.zip
+      - run: |
+          cat y.zip
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1.0.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: test-tag1
+          tag_name: test-tag2
           release_name: Nightly Release
           draft: false
           prerelease: false
@@ -53,7 +64,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./x.zip
+          asset_path: ./y.zip
           asset_name: jdk-loom-macos-nightly.zip
           asset_content_type: application/zip
       - name: Finish
