@@ -40,14 +40,6 @@ jobs:
           name: y
           path: x.zip
 
-      - name: Download file
-        uses: actions/download-artifact@v1
-        with:
-          name: y
-      - run: |
-          ls y
-          ls y/*
-          cat y/*
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1.0.0
