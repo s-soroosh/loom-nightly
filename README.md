@@ -8,6 +8,6 @@ This repository contains Github workflows to release OpenJDK Loom in nightly bas
 
 To download the binary directly you can:
 - Download from [here](https://github.com/psycho-ir/loom-nightly/releases/tag/nightly)
-- Download via wget for linux `wget https://github.com/psycho-ir/loom-nightly/releases/download/acc676788/jdk-loom-linux-nightly.tar.gz`
-- Download via wget for Macos `wget  https://github.com/psycho-ir/loom-nightly/releases/download/acc676788/jdk-loom-macos-nightly.tar.gz`
+- Download via wget for linux `wget https://github.com/psycho-ir/loom-nightly/releases/latest/download/jdk-loom-linux-nightly.tar.gz`
+- Download via wget for Macos `wget  https://github.com/psycho-ir/loom-nightly/releases/latest/download/jdk-loom-macos-nightly.tar.gz`
 
