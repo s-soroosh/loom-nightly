@@ -36,7 +36,7 @@ jobs:
       - name: Upload linux build
         uses: actions/upload-artifact@v1
         with:
-          name: jdk-loom-linux-nightly.zip
+          name: artifacts
           path: src/jdk-loom-linux-nightly.zip
   build-mac:
     runs-on: macos-latest
@@ -65,7 +65,7 @@ jobs:
       - name: Upload macox build
         uses: actions/upload-artifact@v1
         with:
-          name: jdk-loom-macos-nightly.zip
+          name: artifacts
           path: src/jdk-loom-macos-nightly.zip
   release:
     runs-on: ubuntu-latest
@@ -76,11 +76,8 @@ jobs:
       - name: Download linux build
         uses: actions/download-artifact@v1
         with:
-          name: jdk-loom-linux-nightly.zip
-      - name: Download macosx build
-        uses: actions/download-artifact@v1
-        with:
-          name: jdk-loom-macos-nightly.zip
+          name: artifacts
+
       - name: Checkout loom repository
         uses: actions/checkout@v2
         with:
@@ -132,7 +129,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./jdk-loom-linux-nightly.zip
+          asset_path: ./artifacts/jdk-loom-linux-nightly.zip
           asset_name: jdk-loom-linux-nightly.zip
           asset_content_type: application/zip
       - name: Upload  Macos Release Asset
@@ -143,7 +140,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./jdk-loom-macos-nightly.zip
+          asset_path: ./artifacts/jdk-loom-macos-nightly.zip
           asset_name: jdk-loom-macos-nightly.zip
           asset_content_type: application/zip
       - name: Finish
