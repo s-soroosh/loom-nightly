@@ -4,13 +4,10 @@ Project Loom Nightly releases
 [![Status](https://github.com/psycho-ir/loom-nightly/workflows/Release%20Loom%20Project/badge.svg)](https://github.com/psycho-ir/loom-nightly/workflows/Release%20Loom%20Project/badge.svg)
 
 
-This repository contains Github workflows in order to release OpenJDK Loom project in nightly basis.
-
-For the time being it just releases binary for Linux X64, Mac OS release binary will come soon.
-Stay tuned...
+This repository contains Github workflows to release OpenJDK Loom in nightly basis.
 
 To download the binary directly you can:
 - Download from [here](https://github.com/psycho-ir/loom-nightly/releases/tag/nightly)
-- Download via wget `wget  https://github.com/psycho-ir/loom-nighly/releases/download/nightly/jdk-loom-linux-nightly.zip`
+- Download via wget for linux `wget https://github.com/psycho-ir/loom-nightly/releases/download/acc676788/jdk-loom-linux-nightly.tar.gz`
+- Download via wget for Macos `wget  https://github.com/psycho-ir/loom-nightly/releases/download/acc676788/jdk-loom-macos-nightly.tar.gz`
 
-- For Mac OSX binary: 
