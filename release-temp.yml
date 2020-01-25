@@ -1,10 +1,13 @@
-name: Release Project Loom
+name: Release Loom Project
 
+# on:
+#   schedule:
+#     # * is a special character in YAML so you have to quote this string
+#     - cron:  '0 0 * * *'
 on:
-  schedule:
-    # * is a special character in YAML so you have to quote this string
-    - cron:  '0 0 * * *'
-
+  push:
+    branches:
+      - release-together
 
 jobs:
   build-linux:
