@@ -32,12 +32,13 @@ jobs:
           cd src
           sh configure
           make images
-          zip -r jdk-loom-linux-nightly.zip build/linux-x86_64-server-release/jdk
+          
+          tar -czvf jdk-loom-linux-nightly.tar.gz build/linux-x86_64-server-release/jdk
       - name: Upload linux build
         uses: actions/upload-artifact@v1
         with:
           name: artifacts
-          path: src/jdk-loom-linux-nightly.zip
+          path: src/jdk-loom-linux-nightly.tar.gz
   build-mac:
     runs-on: macos-latest
 
@@ -61,12 +62,12 @@ jobs:
           cd src
           sh configure
           make images
-          zip -r jdk-loom-macos-nightly.zip build/macosx-x86_64-server-release/jdk
+          tar -czvf jdk-loom-macos-nightly.tar.gz build/macosx-x86_64-server-release/jdk
       - name: Upload macox build
         uses: actions/upload-artifact@v1
         with:
           name: artifacts
-          path: src/jdk-loom-macos-nightly.zip
+          path: src/jdk-loom-macos-nightly.tar.gz
   release:
     runs-on: ubuntu-latest
     needs:
@@ -129,9 +130,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./artifacts/jdk-loom-linux-nightly.zip
-          asset_name: jdk-loom-linux-nightly.zip
-          asset_content_type: application/zip
+          asset_path: ./artifacts/jdk-loom-linux-nightly.tar.gz
+          asset_name: jdk-loom-linux-nightly.tar.gz
+          asset_content_type: application/gzip
       - name: Upload  Macos Release Asset
         if: env.CONTINUE == 'YES'
         id: upload-mac-release-asset
@@ -140,9 +141,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./artifacts/jdk-loom-macos-nightly.zip
-          asset_name: jdk-loom-macos-nightly.zip
-          asset_content_type: application/zip
+          asset_path: ./artifacts/jdk-loom-macos-nightly.tar.gz
+          asset_name: jdk-loom-macos-nightly.tar.gz
+          asset_content_type: application/gzip
       - name: Finish
         run: |
           echo 'Build finished successfully'
